@@ -27,7 +27,6 @@ export class ManagersController {
   @Get()
   async findAll() {
     const manager = await this.managersService.findAll();
-    console.log(manager);
      return {
     message: 'manager list',
     data: manager,
