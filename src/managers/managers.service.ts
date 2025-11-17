@@ -8,33 +8,33 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ManagersService {
   constructor(
-      @InjectRepository(Manager)
-      private readonly managerRepository: Repository<Manager>,
-    ){}
+    @InjectRepository(Manager)
+    private readonly managerRepository: Repository<Manager>,
+  ) {}
 
-    async create(createManagerDto: CreateManagerDto) {
+  async create(createManagerDto: CreateManagerDto) {
     const manager = this.managerRepository.create(createManagerDto);
     return await this.managerRepository.save(manager);
-    }
+  }
 
-    async findAll(): Promise<Manager[]> {
-      return await Manager.find();
-    }
+  async findAll(): Promise<Manager[]> {
+    return await Manager.find();
+  }
 
-  async findOne(id:number): Promise<Manager | null> {
-     const manager = await Manager.findOneBy({ id });
-     return manager;
-   }
- 
+  async findOne(id: number): Promise<Manager | null> {
+    const manager = await Manager.findOneBy({ id });
+    return manager;
+  }
+
   async findBy(query: object) {
     return await Manager.findOne(query);
   }
-  
-  async update(id: number,  updateManagerDto: UpdateManagerDto) {
-      await Manager.update({ id }, updateManagerDto);
-      return await Manager.findOneBy({ id });
-    }
-  
+
+  async update(id: number, updateManagerDto: UpdateManagerDto) {
+    await Manager.update({ id }, updateManagerDto);
+    return await Manager.findOneBy({ id });
+  }
+
   async remove(id: number) {
     await Manager.delete({ id });
     return { deleted: true };

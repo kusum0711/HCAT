@@ -13,11 +13,11 @@ const options: DataSourceOptions & SeederOptions = {
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  entities: [__dirname+ '/../**/entities/*.entity{.ts,.js}'],
+  entities: [__dirname + '/../**/entities/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   seeds: [MainSeeder],
   synchronize: false,
-   logging: true,
+  logging: true,
 };
 
 const AppDataSource = new DataSource(options);

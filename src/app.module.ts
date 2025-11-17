@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm'; 
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import config from './config/configuration';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TeamsModule } from './teams/teams.module';
 import { ManagersModule } from './managers/managers.module';
-
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
-  imports: [ 
-     ConfigModule.forRoot({
+  imports: [
+    ConfigModule.forRoot({
       isGlobal: true,
       load: [config],
     }),
-   TypeOrmModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forRoot()],
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
@@ -32,9 +32,12 @@ import { ManagersModule } from './managers/managers.module';
         logging: false,
       }),
       inject: [ConfigService],
-    }), 
-    
-    UsersModule, TeamsModule, ManagersModule,
+    }),
+
+    UsersModule,
+    TeamsModule,
+    ManagersModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
