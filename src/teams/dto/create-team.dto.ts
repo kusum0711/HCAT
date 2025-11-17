@@ -8,6 +8,4 @@ export class CreateTeamDto {
   @IsNotEmpty()
   @IsNumber()
   manager_id: number;
-  
-
 }

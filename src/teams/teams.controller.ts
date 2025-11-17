@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -9,24 +18,22 @@ export class TeamsController {
 
   @Post('create')
   async create(@Body() createTeamDto: CreateTeamDto) {
-  
     const team = await this.teamsService.create(createTeamDto);
     return {
       message: 'Team added successfully',
       data: team,
     };
   }
-  
+
   @Get()
   async findAll() {
     const team = await this.teamsService.findAll();
     return {
-    message: 'Team list',
-    data: team,
-  };
+      message: 'Team list',
+      data: team,
+    };
   }
 
- 
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const team = await this.teamsService.findone(+id);
@@ -42,11 +49,11 @@ export class TeamsController {
     };
   }
 
- @Put(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
-     const team = await this.teamsService.findone(+id);
-    
-     if (!team) {
+    const team = await this.teamsService.findone(+id);
+
+    if (!team) {
       return {
         message: 'team not found',
         data: {},
@@ -62,8 +69,8 @@ export class TeamsController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const team = await this.teamsService.findone(+id);
-    
-     if (!team) {
+
+    if (!team) {
       return {
         message: 'team not found',
         data: {},
@@ -75,5 +82,4 @@ export class TeamsController {
       data: team,
     };
   }
-   
 }

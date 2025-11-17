@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Matches, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  MinLength,
+} from 'class-validator';
 
 export class CreateManagerDto {
   @IsNotEmpty()
@@ -6,12 +13,10 @@ export class CreateManagerDto {
   name: string;
 
   @IsNotEmpty()
-  @IsEmail({}, {message: 'Invalid email'})
+  @IsEmail({}, { message: 'Invalid email' })
   email: string;
 
   @IsNotEmpty()
   @IsNumber()
   team_id: number;
-  
-
 }

@@ -1,14 +1,15 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class ManagerManagement1763400286024 implements MigrationInterface {
-    name = 'ManagerManagement1763400286024'
+  name = 'ManagerManagement1763400286024';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "managers" ("id" BIGSERIAL NOT NULL, "name" character varying(70) NOT NULL, "email" character varying NOT NULL, "team_id" bigint NOT NULL, CONSTRAINT "UQ_8d5fd9a2217bf7b16bef11fdf83" UNIQUE ("email"), CONSTRAINT "PK_e70b8cc457276d9b4d82342a8ff" PRIMARY KEY ("id"))`);
-    }
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `CREATE TABLE "managers" ("id" BIGSERIAL NOT NULL, "name" character varying(70) NOT NULL, "email" character varying NOT NULL, "team_id" bigint NOT NULL, CONSTRAINT "UQ_8d5fd9a2217bf7b16bef11fdf83" UNIQUE ("email"), CONSTRAINT "PK_e70b8cc457276d9b4d82342a8ff" PRIMARY KEY ("id"))`,
+    );
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE "managers"`);
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE "managers"`);
+  }
 }
