@@ -7,6 +7,7 @@ import { User } from './users/entities/user.entity';
 import config from './config/configuration';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TeamsModule } from './teams/teams.module';
+import { ManagersModule } from './managers/managers.module';
 
 
 @Module({
@@ -33,7 +34,7 @@ import { TeamsModule } from './teams/teams.module';
       inject: [ConfigService],
     }), 
     
-    UsersModule, TeamsModule,
+    UsersModule, TeamsModule, ManagersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
