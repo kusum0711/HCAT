@@ -37,9 +37,4 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsNotEmpty()
   @IsNumber()
   team_id: number;
-
-  @IsOptional()
-  @IsNotEmpty()
-  @IsNumber()
-  project_id: number;
 }

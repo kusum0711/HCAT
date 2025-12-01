@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Put,
+  ConflictException,
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
@@ -18,6 +19,14 @@ export class TeamsController {
 
   @Post('create')
   async create(@Body() createTeamDto: CreateTeamDto) {
+     const existingTeam = await this.teamsService.findBy({
+          where: { team_name: createTeamDto.team_name,
+           },
+        });
+    
+        if (existingTeam) {
+          throw new ConflictException('Team with this name already exists');
+        }
     const team = await this.teamsService.create(createTeamDto);
     return {
       message: 'Team added successfully',

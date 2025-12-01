@@ -18,7 +18,17 @@ export class ManagersService {
   }
 
   async findAll(): Promise<Manager[]> {
-    return await Manager.find();
+    return await this.managerRepository.find({
+      relations: ['teams', 'projects'],
+    });
+  }
+
+  // Get manager with all teams and projects
+  async findManagerWithRelations(id: number): Promise<Manager | null> {
+    return await this.managerRepository.findOne({
+      where: { id },
+      relations: ['teams', 'projects'],
+    });
   }
 
   async findOne(id: number): Promise<Manager | null> {
@@ -26,7 +36,7 @@ export class ManagersService {
     return manager;
   }
 
-  async findBy(query: object) {
+  async findBy(query: any) {
     return await Manager.findOne(query);
   }
 

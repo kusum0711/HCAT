@@ -1,11 +1,16 @@
+import { Manager } from '../../managers/entities/manager.entity';
 import { statusType } from '../../utils/constant';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity({ name: 'projects' })
 export class Project extends BaseEntity {
@@ -27,10 +32,20 @@ export class Project extends BaseEntity {
   @Column({ type: 'enum', enum: statusType })
   status: statusType;
 
-  @Column({ type: 'bigint' })
-  manager_id: number;
-
   @Column()
   @CreateDateColumn()
   created_at: Date;
+
+   // Many projects have many managers (owner of the relationship)
+  @ManyToMany(() => Manager, (manager) => manager.projects)
+  @JoinTable({
+    name: 'project_managers', // junction table name
+    joinColumn: { name: 'project_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'manager_id', referencedColumnName: 'id' },
+  })
+  managers: Manager[];
+
+ // One project has many users
+  @OneToMany(() => User, (user) => user.project)
+  users: User[];
 }

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { statusType } from '../../utils/constant';
 
 export class CreateProjectDto {
@@ -11,10 +11,6 @@ export class CreateProjectDto {
   description: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  manager_id: number;
-
-  @IsNotEmpty()
   @IsString()
   status: statusType;
 
@@ -23,4 +19,14 @@ export class CreateProjectDto {
 
   @IsOptional()
   end_date: Date;
+
+  @IsOptional()
+  @IsArray()
+  @IsNumber({}, { each: true })
+  manager_ids?: number[];
+
+  // @IsOptional()
+  // @IsArray()
+  // @IsNumber({}, { each: true })
+  // user_ids?: number[];
 }

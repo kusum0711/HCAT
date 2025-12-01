@@ -19,8 +19,4 @@ export class UpdateManagerDto extends PartialType(CreateManagerDto) {
   @IsEmail()
   email: string;
 
-  @IsOptional()
-  @IsNotEmpty()
-  @IsNumber()
-  team_id: number;
 }

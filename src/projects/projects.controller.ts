@@ -26,13 +26,13 @@ export class ProjectsController {
       throw new ConflictException('End date must be after start date');
     }
 
-    const existingproject = await this.projectsService.findBy({
-      where: { name: createProjectDto.name },
-    });
+    // const existingproject = await this.projectsService.findBy({
+    //   where: { name: createProjectDto.name },
+    // });
 
-    if (existingproject) {
-      throw new ConflictException('project with this email already exists');
-    }
+    // if (existingproject) {
+    //   throw new ConflictException('project with this email already exists');
+    // }
     const project = await this.projectsService.create(createProjectDto);
     return {
       message: 'project added',
@@ -48,6 +48,7 @@ export class ProjectsController {
       data: project,
     };
   }
+
 
   @Get(':id')
   async findOne(@Param('id') id: string) {

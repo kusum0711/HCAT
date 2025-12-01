@@ -1,18 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Team } from '../teams/entities/team.entity';
+import { Manager } from '../managers/entities/manager.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+        @InjectRepository(Team)
+    private readonly teamRepository: Repository<Team>,
+        @InjectRepository(Manager)
+    private readonly managerRepository: Repository<Manager>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+  // Check if manager exists
+  const manager = await this.managerRepository.findOne({
+    where: { id: createUserDto.reports_to },
+  });
+
+  if (!manager) {
+    throw new ConflictException('Manager not found');
+  }
+
+  // 2. Check if team exists and belongs to this manager
+  const team = await this.teamRepository.findOne({
+    where: { id: createUserDto.team_id, manager: { id: createUserDto.reports_to } },
+    relations: ['manager'],
+  });
+
+  
+
+  if (!team) {
+     throw new ConflictException(
+      'Team does not belong to this Manager');
+  }
     const user = this.userRepository.create(createUserDto);
     return await this.userRepository.save(user);
   }
@@ -21,10 +48,14 @@ export class UsersService {
     return await User.find();
   }
 
-  async findone(id: number): Promise<User | null> {
-    const user = await User.findOneBy({ id });
-    return user;
-  }
+
+  // Get user with team and projects
+async findone(id: number): Promise<User | null> {
+  return await this.userRepository.findOne({
+    where: { id },
+    relations: ['team', 'project', 'manager'],
+  });
+}
 
   async findBy(query: object) {
     return await User.findOne(query);
