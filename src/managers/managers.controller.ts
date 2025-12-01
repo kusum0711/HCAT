@@ -44,7 +44,7 @@ export class ManagersController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const manager = await this.managersService.findOne(+id);
+    const manager = await this.managersService.findManagerWithRelations(+id);
     if (!manager) {
       return {
         message: 'manager not found',

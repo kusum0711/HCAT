@@ -1,5 +1,8 @@
+import { Team } from '../../teams/entities/team.entity';
 import { UserType } from '../../utils/constant';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, ManyToMany, CreateDateColumn } from 'typeorm';
+import { Project } from '../../projects/entities/project.entity';
+import { Manager } from '../../managers/entities/manager.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -24,6 +27,26 @@ export class User extends BaseEntity {
   @Column({ type: 'bigint' })
   team_id: number;
 
-  @Column({ type: 'bigint' })
+  @Column({ type: 'bigint', nullable: true })
   project_id: number;
+
+  @Column()
+  @CreateDateColumn()
+  joining_date: Date;
+
+   // Many users belong to one team
+  @ManyToOne(() => Team, (team) => team.users)
+  @JoinColumn({ name: 'team_id' })
+  team: Team;
+
+  // Many users belong to one project
+  @ManyToOne(() => Project, (project) => project.users)
+  @JoinColumn({ name: 'project_id' })
+  project: Project;
+
+    // Many users belong to one Manager
+  @ManyToOne(() => Manager, (manager) => manager.users)
+  @JoinColumn({ name: 'reports_to' })
+  manager: Manager;
+  
 }

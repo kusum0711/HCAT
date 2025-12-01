@@ -15,11 +15,6 @@ export class UpdateProjectDto extends PartialType(CreateProjectDto) {
 
   @IsOptional()
   @IsNotEmpty()
-  @IsNumber()
-  manager_id: number;
-
-  @IsOptional()
-  @IsNotEmpty()
   @IsString()
   status: statusType;
 

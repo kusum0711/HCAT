@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Matches,
   MinLength,
@@ -42,6 +43,7 @@ export class CreateUserDto {
   @IsNumber()
   team_id: number;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsNumber()
   project_id: number;

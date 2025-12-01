@@ -18,13 +18,18 @@ export class TeamsService {
   }
 
   async findAll(): Promise<Team[]> {
-    return await Team.find();
+    return await this.teamRepository.find({
+      relations: ['manager', 'users'],
+    });
   }
 
-  async findone(id: number): Promise<Team | null> {
-    const team = await Team.findOneBy({ id });
-    return team;
-  }
+// Get team with manager and users
+async findone(id: number): Promise<Team | null> {
+  return await this.teamRepository.findOne({
+    where: { id },
+    relations: ['manager', 'users'],
+  });
+}
 
   async findBy(query: object) {
     return await Team.findOne(query);

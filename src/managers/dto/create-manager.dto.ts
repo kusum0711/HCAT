@@ -16,7 +16,4 @@ export class CreateManagerDto {
   @IsEmail({}, { message: 'Invalid email' })
   email: string;
 
-  @IsNotEmpty()
-  @IsNumber()
-  team_id: number;
 }
