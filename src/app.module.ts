@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TeamsModule } from './teams/teams.module';
 import { ManagersModule } from './managers/managers.module';
 import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ProjectsModule } from './projects/projects.module';
     TeamsModule,
     ManagersModule,
     ProjectsModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

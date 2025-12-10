@@ -28,7 +28,7 @@ export class UsersService {
     throw new ConflictException('Manager not found');
   }
 
-  // 2. Check if team exists and belongs to this manager
+  //  Check if team exists and belongs to this manager
   const team = await this.teamRepository.findOne({
     where: { id: createUserDto.team_id, manager: { id: createUserDto.reports_to } },
     relations: ['manager'],
@@ -45,7 +45,9 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return await User.find();
+    return await this.userRepository.find(
+      { relations: ['team', 'project', 'manager'] }
+    );
   }
 
 
