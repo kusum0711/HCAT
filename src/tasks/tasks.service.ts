@@ -20,14 +20,14 @@ export class TasksService {
 
   async findAll(): Promise<Task[]> {
       return await this.taskRepository.find({
-    relations: ['user', 'assignee_id', 'assignedByManager'],
+    relations: ['project', 'assignee', 'assignedByManager'],
   });
     }
 
 async findone(id: number): Promise<Task | null> {
   return await this.taskRepository.findOne({
     where: { id },
-    relations: ['user', 'assignee_id', 'assignedByManager'],
+    relations: ['project', 'assignee', 'assignedByManager'],
   });
 }
   async findBy(query: object) {
